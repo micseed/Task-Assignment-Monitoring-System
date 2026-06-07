@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'role'])]
+#[Fillable(['first_name', 'last_name', 'email', 'password', 'role', 'department_id', 'profile_picture', 'is_active'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -27,7 +29,19 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
+            'is_active'         => 'boolean',
         ];
+    }
+
+    /* ---------- Name Accessor ---------- */
+
+    /**
+     * Dynamic attribute to return first and last name combined.
+     * Allows code expecting $user->name to work seamlessly.
+     */
+    public function getNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
     }
 
     /* ---------- Role helpers ---------- */
@@ -45,5 +59,44 @@ class User extends Authenticatable
     public function isStudent(): bool
     {
         return $this->role === 'student';
+    }
+
+    /* ---------- Relationships ---------- */
+
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    // A teacher can teach multiple subjects
+    public function subjects(): HasMany
+    {
+        return $this->hasMany(Subject::class, 'teacher_id');
+    }
+
+    // A student has multiple enrollments in classes
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(ClassEnrollment::class, 'student_id');
+    }
+
+    // Classes student is enrolled in
+    public function classes(): BelongsToMany
+    {
+        return $this->belongsToMany(AcademicClass::class, 'class_enrollments', 'student_id', 'class_id')
+                    ->withPivot('status')
+                    ->withTimestamps();
+    }
+
+    // Submissions sent by this student
+    public function submissions(): HasMany
+    {
+        return $this->hasMany(Submission::class, 'student_id');
+    }
+
+    // Notifications received by this user
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class, 'recipient_id');
     }
 }

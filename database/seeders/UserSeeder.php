@@ -10,39 +10,49 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // Admin / Dean
+        // Seed standard accounts
+        User::updateOrCreate(
+            ['email' => 'admin@school.edu'],
+            [
+                'first_name' => 'Maria',
+                'last_name'  => 'Santos',
+                'email'      => 'admin@school.edu',
+                'password'   => Hash::make('password'),
+                'role'       => 'admin',
+            ]
+        );
+
         User::updateOrCreate(
             ['email' => 'admin@tam.test'],
             [
-                'name'     => 'System Admin',
-                'email'    => 'admin@tam.test',
-                'password' => Hash::make('password'),
-                'role'     => 'admin',
+                'first_name' => 'System',
+                'last_name'  => 'Admin',
+                'email'      => 'admin@tam.test',
+                'password'   => Hash::make('password'),
+                'role'       => 'admin',
             ]
         );
 
-        // Teacher
         User::updateOrCreate(
             ['email' => 'teacher@tam.test'],
             [
-                'name'     => 'Demo Teacher',
-                'email'    => 'teacher@tam.test',
-                'password' => Hash::make('password'),
-                'role'     => 'teacher',
+                'first_name' => 'Demo',
+                'last_name'  => 'Teacher',
+                'email'      => 'teacher@tam.test',
+                'password'   => Hash::make('password'),
+                'role'       => 'teacher',
             ]
         );
 
-        // Student
         User::updateOrCreate(
             ['email' => 'student@tam.test'],
             [
-                'name'     => 'Demo Student',
-                'email'    => 'student@tam.test',
-                'password' => Hash::make('password'),
-                'role'     => 'student',
+                'first_name' => 'Demo',
+                'last_name'  => 'Student',
+                'email'      => 'student@tam.test',
+                'password'   => Hash::make('password'),
+                'role'       => 'student',
             ]
         );
-
-        $this->command->info('✅  Seeded: admin@tam.test | teacher@tam.test | student@tam.test  (password: password)');
     }
 }
