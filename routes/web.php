@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -79,5 +80,22 @@ Route::middleware('auth')->group(function () {
         Route::get('/profile', [TeacherController::class, 'profile'])->name('profile');
         Route::post('/profile/update', [TeacherController::class, 'updateProfile'])->name('profile.update');
         Route::post('/profile/password', [TeacherController::class, 'updatePassword'])->name('profile.password');
+    });
+
+    // ── Student Dashboard routes ───────────────────────────────────────────
+    Route::middleware('student')->prefix('student')->name('student.')->group(function () {
+        // Overview
+        Route::get('/dashboard', [StudentController::class, 'overview'])->name('dashboard');
+
+        // My Assignments
+        Route::get('/assignments', [StudentController::class, 'assignments'])->name('assignments');
+        Route::get('/assignments/{assignment}', [StudentController::class, 'assignmentDetail'])->name('assignments.detail');
+        Route::post('/assignments/{assignment}/submit', [StudentController::class, 'submitAssignment'])->name('assignments.submit');
+        Route::post('/assignments/{assignment}/unsubmit', [StudentController::class, 'unsubmitAssignment'])->name('assignments.unsubmit');
+
+        // Profile
+        Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
+        Route::post('/profile/update', [StudentController::class, 'updateProfile'])->name('profile.update');
+        Route::post('/profile/password', [StudentController::class, 'updatePassword'])->name('profile.password');
     });
 });

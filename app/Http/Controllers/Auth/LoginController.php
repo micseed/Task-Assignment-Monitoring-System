@@ -36,6 +36,9 @@ class LoginController extends Controller
             if ($user->isTeacher()) {
                 return redirect()->intended(route('teacher.dashboard'));
             }
+            if ($user->isStudent()) {
+                return redirect()->intended(route('student.dashboard'));
+            }
 
             return redirect()->intended(route('welcome'));
         }
