@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
                 'first_name' => 'Maria',
                 'last_name'  => 'Santos',
                 'email'      => 'admin@school.edu',
-                'password'   => Hash::make('password'),
+                'password_hash' => Hash::make('password'),
                 'role'       => 'admin',
             ]
         );
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
                 'first_name' => 'System',
                 'last_name'  => 'Admin',
                 'email'      => 'admin@tam.test',
-                'password'   => Hash::make('password'),
+                'password_hash' => Hash::make('password'),
                 'role'       => 'admin',
             ]
         );
@@ -72,7 +72,7 @@ class DatabaseSeeder extends Seeder
                 'first_name' => 'Demo',
                 'last_name'  => 'Student',
                 'email'      => 'student@tam.test',
-                'password'   => Hash::make('password'),
+                'password_hash' => Hash::make('password'),
                 'role'       => 'student',
                 'department_id' => $deptIT->id,
             ]
@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
                 'first_name' => 'John',
                 'last_name'  => 'Doe',
                 'email'      => 'teacher@tam.test',
-                'password'   => Hash::make('password'),
+                'password_hash' => Hash::make('password'),
                 'role'       => 'teacher',
                 'department_id' => $deptIT->id,
             ]

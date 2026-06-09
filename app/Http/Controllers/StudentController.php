@@ -486,11 +486,11 @@ class StudentController extends Controller
             'password'         => 'required|string|min:8|confirmed',
         ]);
 
-        if (!Hash::check($request->current_password, $student->password)) {
+        if (!Hash::check($request->current_password, $student->password_hash)) {
             return back()->withErrors(['current_password' => 'The current password is incorrect.']);
         }
 
-        $student->update(['password' => Hash::make($request->password)]);
+        $student->update(['password_hash' => Hash::make($request->password)]);
 
         AuditLogger::log('Password Changed', "Student {$student->name} changed their password.", $student->id);
 

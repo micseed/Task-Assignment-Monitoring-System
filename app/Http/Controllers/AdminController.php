@@ -100,7 +100,8 @@ class AdminController extends Controller
             'is_active'     => 'boolean',
         ]);
 
-        $data['password'] = Hash::make($data['password']);
+        $data['password_hash'] = Hash::make($data['password']);
+        unset($data['password']);
         $data['is_active'] = $request->has('is_active');
 
         $user = User::create($data);
@@ -123,10 +124,9 @@ class AdminController extends Controller
         ]);
 
         if (!empty($data['password'])) {
-            $data['password'] = Hash::make($data['password']);
-        } else {
-            unset($data['password']);
+            $data['password_hash'] = Hash::make($data['password']);
         }
+        unset($data['password']);
 
         $data['is_active'] = $request->has('is_active');
 
