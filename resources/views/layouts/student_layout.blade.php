@@ -98,6 +98,30 @@
                 <span>My Assignments</span>
             </a>
 
+            {{-- Grades & Feedback --}}
+            <a href="{{ route('student.grades') }}"
+               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
+                      {{ request()->routeIs('student.grades*')
+                           ? 'bg-gold-500/15 border-l-4 border-gold-500 pl-3 text-gold-400 font-semibold'
+                           : 'text-white/75 hover:bg-white/8 hover:text-white border-l-4 border-transparent' }}">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <span>Grades &amp; Feedback</span>
+            </a>
+
+            {{-- Deadlines Calendar --}}
+            <a href="{{ route('student.calendar') }}"
+               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
+                      {{ request()->routeIs('student.calendar*')
+                           ? 'bg-gold-500/15 border-l-4 border-gold-500 pl-3 text-gold-400 font-semibold'
+                           : 'text-white/75 hover:bg-white/8 hover:text-white border-l-4 border-transparent' }}">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                </svg>
+                <span>Deadlines Calendar</span>
+            </a>
+
             {{-- Profile Settings --}}
             <a href="{{ route('student.profile') }}"
                class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200

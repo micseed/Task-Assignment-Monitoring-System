@@ -6,35 +6,55 @@
 @section('content')
 <div class="space-y-6">
 
+    {{-- Welcome Banner --}}
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <h1 class="text-xl font-bold text-gray-800 tracking-tight">Welcome, {{ auth()->user()->name }}!</h1>
+        <p class="text-sm text-gray-500 mt-1">Here's a snapshot of your academic progress and upcoming deadlines.</p>
+    </div>
+
     <!-- Quick Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex items-center">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {{-- Submitted Tasks --}}
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex items-center transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
             <div class="h-12 w-12 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 mr-4">
-                <i class="fa-solid fa-list-check text-xl"></i>
+                <i class="fa-solid fa-paper-plane text-lg"></i>
             </div>
             <div>
-                <div class="text-sm text-gray-500 font-medium">Total Assignments</div>
-                <div class="text-2xl font-bold text-gray-800">{{ $totalAssignments }}</div>
-            </div>
-        </div>
-        
-        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex items-center">
-            <div class="h-12 w-12 rounded-lg bg-green-50 flex items-center justify-center text-green-600 mr-4">
-                <i class="fa-solid fa-check-double text-xl"></i>
-            </div>
-            <div>
-                <div class="text-sm text-gray-500 font-medium">Submitted</div>
-                <div class="text-2xl font-bold text-gray-800">{{ $submittedCount }}</div>
+                <div class="text-xs text-gray-400 font-bold uppercase tracking-wider">Submitted</div>
+                <div class="text-2xl font-bold text-gray-800 mt-0.5">{{ $submittedCount }}</div>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex items-center">
-            <div class="h-12 w-12 rounded-lg bg-yellow-50 flex items-center justify-center text-yellow-600 mr-4">
-                <i class="fa-regular fa-clock text-xl"></i>
+        {{-- Pending Tasks --}}
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex items-center transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+            <div class="h-12 w-12 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600 mr-4">
+                <i class="fa-regular fa-clock text-lg"></i>
             </div>
             <div>
-                <div class="text-sm text-gray-500 font-medium">Pending Tasks</div>
-                <div class="text-2xl font-bold text-gray-800">{{ $pendingCount }}</div>
+                <div class="text-xs text-gray-400 font-bold uppercase tracking-wider">Pending</div>
+                <div class="text-2xl font-bold text-gray-800 mt-0.5">{{ $pendingCount }}</div>
+            </div>
+        </div>
+
+        {{-- Overdue Tasks --}}
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex items-center transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+            <div class="h-12 w-12 rounded-lg bg-rose-50 flex items-center justify-center text-rose-600 mr-4">
+                <i class="fa-solid fa-triangle-exclamation text-lg"></i>
+            </div>
+            <div>
+                <div class="text-xs text-gray-400 font-bold uppercase tracking-wider">Overdue</div>
+                <div class="text-2xl font-bold text-gray-800 mt-0.5">{{ $overdueCount }}</div>
+            </div>
+        </div>
+
+        {{-- Graded Tasks --}}
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 flex items-center transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+            <div class="h-12 w-12 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 mr-4">
+                <i class="fa-solid fa-award text-lg"></i>
+            </div>
+            <div>
+                <div class="text-xs text-gray-400 font-bold uppercase tracking-wider">Graded</div>
+                <div class="text-2xl font-bold text-gray-800 mt-0.5">{{ $gradedCount }}</div>
             </div>
         </div>
     </div>

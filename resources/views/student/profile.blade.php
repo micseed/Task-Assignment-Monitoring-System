@@ -58,6 +58,29 @@
                             <input type="email" name="email" value="{{ old('email', Auth::user()->email) }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-maroon-500 focus:ring-maroon-500 sm:text-sm">
                             @error('email') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                         </div>
+                        <div class="md:col-span-2 mt-4 pt-4 border-t border-gray-100">
+                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Notification Preferences</h4>
+                            <div class="space-y-3">
+                                <label class="flex items-start gap-3 cursor-pointer">
+                                    <input type="checkbox" name="email_notifications" value="1"
+                                           class="mt-1 w-4 h-4 rounded border-gray-300 accent-maroon-700 cursor-pointer"
+                                           {{ old('email_notifications', Auth::user()->email_notifications) ? 'checked' : '' }} />
+                                    <div>
+                                        <span class="text-sm font-semibold text-gray-700 block leading-none">Email Alerts</span>
+                                        <span class="text-xs text-gray-400">Receive email reminders when new assignments are published or evaluated</span>
+                                    </div>
+                                </label>
+                                <label class="flex items-start gap-3 cursor-pointer">
+                                    <input type="checkbox" name="calendar_notifications" value="1"
+                                           class="mt-1 w-4 h-4 rounded border-gray-300 accent-maroon-700 cursor-pointer"
+                                           {{ old('calendar_notifications', Auth::user()->calendar_notifications) ? 'checked' : '' }} />
+                                    <div>
+                                        <span class="text-sm font-semibold text-gray-700 block leading-none">Google Calendar Sync</span>
+                                        <span class="text-xs text-gray-400">Automatically sync upcoming task deadlines with your Google Calendar reminders</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-5 text-right">
                         <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-maroon-700 hover:bg-maroon-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-maroon-500">

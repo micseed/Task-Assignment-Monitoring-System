@@ -93,6 +93,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/assignments/{assignment}/submit', [StudentController::class, 'submitAssignment'])->name('assignments.submit');
         Route::post('/assignments/{assignment}/unsubmit', [StudentController::class, 'unsubmitAssignment'])->name('assignments.unsubmit');
 
+        // Grades & Feedback
+        Route::get('/grades', [StudentController::class, 'grades'])->name('grades');
+
+        // Calendar & Google Calendar integration
+        Route::get('/calendar', [StudentController::class, 'calendar'])->name('calendar');
+        Route::post('/calendar/sync', [StudentController::class, 'syncCalendar'])->name('calendar.sync');
+
         // Profile
         Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
         Route::post('/profile/update', [StudentController::class, 'updateProfile'])->name('profile.update');

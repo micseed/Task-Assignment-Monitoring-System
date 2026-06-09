@@ -8,6 +8,10 @@
         header('Location: ' . route('teacher.dashboard'));
         exit();
     }
+    if ($user && $user->isStudent()) {
+        header('Location: ' . route('student.dashboard'));
+        exit();
+    }
 @endphp
 
 <!DOCTYPE html>
