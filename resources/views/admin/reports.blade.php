@@ -1,6 +1,7 @@
 @extends('layouts.admin_layout')
 
 @section('title', 'Department & Performance Reports — WMSU TAMS Admin')
+@section('page_title', 'Department Reports')
 
 @push('styles')
 <style>

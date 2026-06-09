@@ -33,43 +33,39 @@
         }
     </script>
     @stack('styles')
+    <style>
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .page-animate { animation: fadeInUp 0.4s ease both; }
+        /* Sidebar scrollbar */
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+    </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-900 antialiased">
 
     {{-- ── Sidebar ─────────────────────────────────────────────────────────── --}}
     <aside id="sidebar"
-           class="fixed inset-y-0 left-0 z-40 w-72 bg-gradient-to-b from-maroon-900 to-maroon-800
-                  flex flex-col shadow-2xl transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+           class="fixed inset-y-0 left-0 z-50 w-72 flex flex-col
+                  bg-gradient-to-b from-maroon-900 to-maroon-800
+                  shadow-[4px_0_24px_rgba(0,0,0,0.18)]
+                  transition-transform duration-300
+                  -translate-x-full lg:translate-x-0">
 
         {{-- Logo / Brand --}}
-        <div class="flex items-center gap-3 px-6 py-5 border-b border-maroon-700/50">
-            <div class="w-9 h-9 rounded-xl bg-gold-400 flex items-center justify-center flex-shrink-0 shadow">
-                <svg class="w-5 h-5 text-maroon-900" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 3.741-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                </svg>
-            </div>
+        <div class="flex items-center gap-3 px-6 py-5 border-b border-white/10 flex-shrink-0">
+            <img src="{{ asset('images/wmsu_logo.png') }}" alt="WMSU" class="w-11 h-11 object-contain flex-shrink-0" />
             <div>
-                <p class="text-xs font-bold text-gold-400 uppercase tracking-widest leading-none">WMSU TAMS</p>
-                <p class="text-sm font-semibold text-white mt-0.5">Teacher Portal</p>
-            </div>
-        </div>
-
-        {{-- Teacher identity --}}
-        <div class="px-6 py-4 border-b border-maroon-700/40">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-maroon-700 border-2 border-maroon-600 flex items-center
-                            justify-center text-white text-sm font-bold uppercase flex-shrink-0">
-                    {{ substr(auth()->user()->first_name, 0, 1) }}{{ substr(auth()->user()->last_name, 0, 1) }}
-                </div>
-                <div class="min-w-0">
-                    <p class="text-sm font-semibold text-white truncate">{{ auth()->user()->name }}</p>
-                    <p class="text-xs text-maroon-300 truncate">Subject Teacher</p>
-                </div>
+                <p class="text-base font-extrabold tracking-tight text-white uppercase leading-none">WMSU TAMS</p>
+                <p class="text-[10px] font-bold text-gold-500 uppercase tracking-widest mt-0.5">Teacher Portal</p>
             </div>
         </div>
 
         {{-- Navigation --}}
-        <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
+        <nav class="flex-1 overflow-y-auto sidebar-scroll px-3 py-4 space-y-1">
             @php
                 $navItems = [
                     ['route' => 'teacher.dashboard',       'label' => 'Overview',            'icon' => 'M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z'],
@@ -86,78 +82,90 @@
                     $isActive = request()->routeIs($item['route']) || request()->routeIs($item['route'] . '.*');
                 @endphp
                 <a href="{{ route($item['route']) }}"
-                   class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
+                   class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
                           {{ $isActive
-                                ? 'bg-white/15 text-white shadow-sm'
-                                : 'text-maroon-200 hover:bg-white/10 hover:text-white' }}">
-                    <svg class="w-5 h-5 flex-shrink-0 {{ $isActive ? 'text-gold-400' : 'text-maroon-300' }}"
+                                ? 'bg-gold-500/15 border-l-4 border-gold-500 pl-3 text-gold-400 font-semibold'
+                                : 'text-white/75 hover:bg-white/8 hover:text-white border-l-4 border-transparent' }}">
+                    <svg class="w-5 h-5 flex-shrink-0"
                          fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="{{ $item['icon'] }}" />
                     </svg>
-                    {{ $item['label'] }}
-                    @if($isActive)
-                        <span class="ml-auto w-1.5 h-1.5 bg-gold-400 rounded-full"></span>
-                    @endif
+                    <span>{{ $item['label'] }}</span>
                 </a>
             @endforeach
         </nav>
 
-        {{-- Sign Out --}}
-        <div class="px-3 py-4 border-t border-maroon-700/40">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit"
-                        class="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium
-                               text-maroon-300 hover:bg-white/10 hover:text-white transition-all">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
-                    </svg>
-                    Sign Out
-                </button>
-            </form>
+        {{-- Sidebar Footer --}}
+        <div class="flex-shrink-0 px-5 py-4 border-t border-white/10 text-center">
+            <p class="text-[11px] text-white/35">&copy; {{ date('Y') }} WMSU TAMS</p>
         </div>
     </aside>
 
     {{-- ── Main wrapper ──────────────────────────────────────────────────────── --}}
-    <div class="lg:ml-72 flex flex-col min-h-screen">
+    <div class="flex flex-col flex-1 min-w-0 lg:ml-72 transition-all duration-300">
 
         {{-- Top header --}}
-        <header class="sticky top-0 z-30 h-16 bg-white/90 backdrop-blur border-b border-gray-100
-                       flex items-center justify-between px-5 sm:px-8 shadow-sm">
+        <header class="sticky top-0 z-40 flex items-center justify-between h-[70px] px-6 lg:px-10
+                        bg-white border-b border-gray-100 shadow-sm">
             {{-- Mobile hamburger --}}
-            <button id="menu-toggle"
-                    class="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl border border-gray-200
-                           text-gray-500 hover:bg-gray-50 transition-colors">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                </svg>
-            </button>
-
-            {{-- Page title slot --}}
-            <div class="flex items-center gap-2">
-                <span class="text-xs font-bold uppercase tracking-widest text-gray-400 hidden sm:block">Teacher</span>
-                <span class="text-gray-300 hidden sm:block">/</span>
-                <span class="text-sm font-bold text-gray-700">@yield('page_title', 'Overview')</span>
+            <div class="flex items-center gap-4">
+                <button id="menu-toggle"
+                        class="lg:hidden flex items-center justify-center w-9 h-9 rounded-lg border border-gray-200
+                               text-gray-500 hover:bg-gray-50 hover:text-gray-700 transition-colors">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold uppercase tracking-widest text-gray-400 hidden sm:block">Teacher</span>
+                    <span class="text-gray-300 hidden sm:block">/</span>
+                    <span class="text-sm font-bold text-gray-700">@yield('page_title', 'Overview')</span>
+                </div>
             </div>
 
             {{-- Right side --}}
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-4">
+                {{-- Submissions Inbox quick link --}}
                 <a href="{{ route('teacher.submissions.inbox') }}"
                    class="relative flex items-center justify-center w-9 h-9 rounded-xl border border-gray-200
-                          text-gray-500 hover:bg-gray-50 transition-colors">
+                          text-gray-500 hover:bg-gray-50 transition-colors"
+                   title="Submissions Inbox">
                     <svg class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z" />
                     </svg>
                 </a>
-                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-maroon-800 to-maroon-700
-                            text-white text-xs font-bold flex items-center justify-center uppercase">
-                    {{ substr(auth()->user()->first_name, 0, 1) }}{{ substr(auth()->user()->last_name, 0, 1) }}
+
+                {{-- User Avatar + Info --}}
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-maroon-800 to-maroon-700 text-white
+                                flex items-center justify-center text-sm font-bold uppercase
+                                ring-2 ring-gold-500 ring-offset-1">
+                        {{ substr(auth()->user()->first_name, 0, 1) }}{{ substr(auth()->user()->last_name, 0, 1) }}
+                    </div>
+                    <div class="hidden sm:block">
+                        <p class="text-sm font-semibold text-gray-800 leading-none">{{ auth()->user()->name }}</p>
+                        <p class="text-[11px] text-gray-400 font-medium uppercase tracking-wider mt-0.5">Subject Teacher</p>
+                    </div>
                 </div>
+
+                {{-- Logout --}}
+                <form method="POST" action="{{ route('logout') }}" class="m-0">
+                    @csrf
+                    <button type="submit"
+                            class="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-500
+                                   border border-gray-200 rounded-lg transition-colors
+                                   hover:bg-red-50 hover:text-red-600 hover:border-red-200">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+                        </svg>
+                        Sign Out
+                    </button>
+                </form>
             </div>
         </header>
 
         {{-- Page content --}}
-        <main class="flex-1 p-5 sm:p-8">
+        <main class="flex-1 p-5 sm:p-8 page-animate">
 
             {{-- Flash alerts --}}
             @if(session('success'))

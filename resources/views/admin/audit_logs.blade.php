@@ -1,6 +1,7 @@
 @extends('layouts.admin_layout')
 
 @section('title', 'Audit Logs — WMSU TAMS Admin')
+@section('page_title', 'Audit Activity Logs')
 
 @section('admin_content')
 

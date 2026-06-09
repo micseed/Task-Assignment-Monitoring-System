@@ -1,6 +1,7 @@
 @extends('layouts.admin_layout')
 
 @section('title', 'Class & Subject Setup — WMSU TAMS Admin')
+@section('page_title', 'Classes & Subjects')
 
 @section('admin_content')
 

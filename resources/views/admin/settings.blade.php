@@ -1,6 +1,7 @@
 @extends('layouts.admin_layout')
 
 @section('title', 'System Settings — WMSU TAMS Admin')
+@section('page_title', 'System Settings')
 
 @section('admin_content')
 
@@ -9,8 +10,8 @@
         <p class="text-sm text-gray-500 mt-1">Adjust term variables, grading limits, compliance alerts, notifications thresholds, and preferences.</p>
     </div>
 
-    <div class="max-w-3xl space-y-6">
-        <form method="POST" action="{{ route('admin.settings.update') }}">
+    <div class="w-full">
+        <form method="POST" action="{{ route('admin.settings.update') }}" class="space-y-8">
             @csrf
 
             {{-- 1. Term & Academic Settings --}}
@@ -24,14 +25,14 @@
                 <div class="divide-y divide-gray-50">
 
                     {{-- School Year --}}
-                    <div class="grid grid-cols-1 md:grid-cols-[1.2fr_1.8fr] gap-4 px-6 py-5 items-center">
-                        <div>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 px-6 py-5">
+                        <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-800">Academic School Year</p>
                             <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Default term label for newly generated classes and evaluations.</p>
                         </div>
-                        <div>
+                        <div class="flex-shrink-0">
                             <select id="school_year" name="school_year"
-                                    class="w-full max-w-[250px] px-3 py-2.5 border border-gray-200 rounded-xl bg-gray-50 text-sm outline-none focus:border-maroon-700 focus:ring-2 focus:ring-maroon-700/15 focus:bg-white transition-all">
+                                    class="w-full md:w-[250px] px-3 py-2.5 border border-gray-200 rounded-xl bg-gray-50 text-sm outline-none focus:border-maroon-700 focus:ring-2 focus:ring-maroon-700/15 focus:bg-white transition-all">
                                 <option value="2024-2025" {{ $school_year === '2024-2025' ? 'selected' : '' }}>2024–2025</option>
                                 <option value="2025-2026" {{ $school_year === '2025-2026' ? 'selected' : '' }}>2025–2026</option>
                                 <option value="2026-2027" {{ $school_year === '2026-2027' ? 'selected' : '' }}>2026–2027</option>
@@ -40,14 +41,14 @@
                     </div>
 
                     {{-- Grading Scheme --}}
-                    <div class="grid grid-cols-1 md:grid-cols-[1.2fr_1.8fr] gap-4 px-6 py-5 items-center">
-                        <div>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 px-6 py-5">
+                        <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-800">Grading Scheme Model</p>
                             <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Standard grading representation for evaluating class submissions.</p>
                         </div>
-                        <div>
+                        <div class="flex-shrink-0">
                             <select id="grading_scheme" name="grading_scheme"
-                                    class="w-full max-w-[250px] px-3 py-2.5 border border-gray-200 rounded-xl bg-gray-50 text-sm outline-none focus:border-maroon-700 focus:ring-2 focus:ring-maroon-700/15 focus:bg-white transition-all">
+                                    class="w-full md:w-[250px] px-3 py-2.5 border border-gray-200 rounded-xl bg-gray-50 text-sm outline-none focus:border-maroon-700 focus:ring-2 focus:ring-maroon-700/15 focus:bg-white transition-all">
                                 <option value="percentage" {{ $grading_scheme === 'percentage' ? 'selected' : '' }}>Numeric / Percentage (%)</option>
                                 <option value="gpa" {{ $grading_scheme === 'gpa' ? 'selected' : '' }}>GPA Scale (1.0 – 5.0)</option>
                                 <option value="standard" {{ $grading_scheme === 'standard' ? 'selected' : '' }}>Letter Grades (A – F)</option>
@@ -56,12 +57,12 @@
                     </div>
 
                     {{-- Passing Score --}}
-                    <div class="grid grid-cols-1 md:grid-cols-[1.2fr_1.8fr] gap-4 px-6 py-5 items-center">
-                        <div>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 px-6 py-5">
+                        <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-800">Passing Compliance Score (%)</p>
                             <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Points below this rate identify students as failing or at‑risk.</p>
                         </div>
-                        <div class="flex items-center gap-3">
+                        <div class="w-full md:w-[350px] flex items-center gap-3 flex-shrink-0">
                             <input type="range" id="passing_score_slider" min="50" max="95" step="1"
                                    value="{{ $passing_score }}"
                                    oninput="document.getElementById('passing_score_val').innerText = this.value; document.getElementById('passing_score_hidden').value = this.value"
@@ -86,12 +87,12 @@
                 <div class="divide-y divide-gray-50">
 
                     {{-- Email Alerts --}}
-                    <div class="grid grid-cols-1 md:grid-cols-[1.2fr_1.8fr] gap-4 px-6 py-5 items-center">
-                        <div>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 px-6 py-5">
+                        <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-800">Enable System Email Alerts</p>
                             <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Sends transaction emails for reminders, notifications, and task assignments.</p>
                         </div>
-                        <div>
+                        <div class="flex-shrink-0">
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" name="enable_notifications" value="1"
                                        class="sr-only peer" {{ $enable_notifications === '1' ? 'checked' : '' }}>
@@ -105,14 +106,14 @@
                     </div>
 
                     {{-- Auto-Reminder Days --}}
-                    <div class="grid grid-cols-1 md:grid-cols-[1.2fr_1.8fr] gap-4 px-6 py-5 items-center">
-                        <div>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 px-6 py-5">
+                        <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-800">Auto-Reminder Frequency (Days)</p>
                             <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Days prior to task due dates to send auto reminder alerts to students.</p>
                         </div>
-                        <div>
+                        <div class="flex-shrink-0">
                             <select id="auto_reminder_days" name="auto_reminder_days"
-                                    class="w-full max-w-[180px] px-3 py-2.5 border border-gray-200 rounded-xl bg-gray-50 text-sm outline-none focus:border-maroon-700 focus:ring-2 focus:ring-maroon-700/15 focus:bg-white transition-all">
+                                    class="w-full md:w-[180px] px-3 py-2.5 border border-gray-200 rounded-xl bg-gray-50 text-sm outline-none focus:border-maroon-700 focus:ring-2 focus:ring-maroon-700/15 focus:bg-white transition-all">
                                 @for($i=1; $i<=7; $i++)
                                     <option value="{{ $i }}" {{ $auto_reminder_days == $i ? 'selected' : '' }}>
                                         {{ $i }} {{ Str::plural('Day', $i) }} before
@@ -136,12 +137,12 @@
                 <div class="divide-y divide-gray-50">
 
                     {{-- Self Registration --}}
-                    <div class="grid grid-cols-1 md:grid-cols-[1.2fr_1.8fr] gap-4 px-6 py-5 items-center">
-                        <div>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 px-6 py-5">
+                        <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-800">Student Self-Registration</p>
                             <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Allow self account creation for students from the authentication landing portal.</p>
                         </div>
-                        <div>
+                        <div class="flex-shrink-0">
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" name="allow_self_registration" value="1"
                                        class="sr-only peer" {{ $allow_self_registration === '1' ? 'checked' : '' }}>
@@ -155,12 +156,12 @@
                     </div>
 
                     {{-- Maintenance Mode --}}
-                    <div class="grid grid-cols-1 md:grid-cols-[1.2fr_1.8fr] gap-4 px-6 py-5 items-center">
-                        <div>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 px-6 py-5">
+                        <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-800">Oversight Maintenance Mode</p>
                             <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Enables offline maintenance banner, restricting system operations and locking teacher/student tasks.</p>
                         </div>
-                        <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-3 flex-shrink-0">
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" name="maintenance_mode" value="1"
                                        class="sr-only peer" {{ $maintenance_mode === '1' ? 'checked' : '' }}>

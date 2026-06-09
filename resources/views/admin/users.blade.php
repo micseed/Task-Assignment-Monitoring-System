@@ -1,6 +1,7 @@
 @extends('layouts.admin_layout')
 
 @section('title', 'User Management — WMSU TAMS Admin')
+@section('page_title', 'User Management')
 
 @section('admin_content')
 
